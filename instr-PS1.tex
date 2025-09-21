@@ -34,6 +34,26 @@ and you multiply each residue by the shift from zero, i.e.,
 \end{equation*}
 \textit{If you dare}, determine the corresponding strain histories $\varepsilon_1(t)$ and $\varepsilon_2(t)$. The first is relatively straightforward; the latter has complex poles and more terms. 
 
+\bigskip
+\textit{Solution.}
+\begin{align*}
+\bm{a.)}\; \mathcal{L}\{\varepsilon_1(t)\} &= \mathcal{L}\{ \int_0^t ( J_\infty + (J_0-J_\infty)\exp[-(t-\tau)/\tau_c]) \frac{d(\sigma_0 H(\tau))}{d\tau} d\tau \} \\
+&= \mathcal{L}\{ \int_0^t ( J_\infty + (J_0-J_\infty)\exp[-(t-\tau)/\tau_c]) \sigma_0 \delta(\tau) d\tau \} \\
+&= \sigma_0 \mathcal{L}\{ \int_0^t ( J_\infty + (J_0-J_\infty)\exp[-(t-\tau)/\tau_c]) \delta(\tau) d\tau \} \\
+&= \sigma_0 \mathcal{L}\{J_\infty + (J_0 - J_\infty)\exp[-t/\tau_c]\} \\
+&= \sigma_0 \left(\frac{J_\infty}{s} + \frac{J_0 - J_\infty}{s+\tau^{-1}}\right) \\
+\end{align*}
+\begin{align*}
+\bm{b.)}\; \mathcal{L}\{\varepsilon_2(t)\} &= \mathcal{L}\{ \int_0^t ( J_\infty + (J_0-J_\infty)\exp[-(t-\tau)/\tau_c]) \frac{d(\sigma_0 \sin(\omega \tau))}{d\tau} d\tau \} \\
+&= \sigma_0 \omega \mathcal{L}\{ \int_0^t ( J_\infty + (J_0-J_\infty)\exp[-(t-\tau)/\tau_c]) \cos(\omega \tau) d\tau \} \\
+&= \sigma_0 \omega \mathcal{L}\{J_\infty + (J_0 - J_\infty)\exp[-t/\tau_c]\} \mathcal{L}\{\cos(\omega t)\} \\
+&= \sigma_0 \omega \left( \frac{J_\infty}{s} + \frac{J_0 - J_\infty}{s+\tau_c^{-1}} \right) \frac{s}{s^2+\omega^2}
+\end{align*}
+
+I dare not venture further into the land of 501 given time constraints w/ my other work :)
+% Recognize the Volterra integral form, which allows the function to be re-written as:
+
+
 %\newpage
 \bigskip
 \subsection*{1--2. \textbf{Index notation} [4 pts].} Let $\bm{p}, \bm{q}, \bm{r}, \bm{a}, \bm{b}$ be vector fields on $\mathbbm{R}^3$ and $\bn{Q}$ be a change-of-basis tensor on $\mathbbm{R}^3$. Show the following identities to be true using index notation. 
@@ -44,6 +64,41 @@ and you multiply each residue by the shift from zero, i.e.,
     \item $(\bm{a} \otimes \bm{b})(\bm{p} \otimes \bm{q}) = \bm{a}\otimes\bm{q}(\bm{b} \cdot \bm{p}) $
     \item $\bn{Q}^\intercal\bm{a} \cdot \bn{Q}^\intercal\bm{b} = \bm{a}\cdot\bm{b} $
 \end{itemize}
+
+\textit{Solution:}
+\begin{align*}
+\bm{a.)}\; \text{LHS} &= p_m \bm{e}^{(m)} \times q_i r_j \epsilon_{ijk} \bm{e}^{(k)} \\
+ &= p_m q_i r_j \epsilon_{ijk} \epsilon_{mnk} \bm{e}^{(n)} \\
+ &= p_m q_i r_j (\delta_{in} \delta_{jm} - \delta_{im} \delta_{jn})\bm{e}^{(n)} \\
+ &= (p_j q_n r_j - p_i q_i r_n) \bm{e}^{(n)} \\
+ &= r_j p_j q_n \bm{e}^{(n)} - q_i p_i r_n \bm{e}^{(n)} \\ 
+ &= (\bm{r} \cdot \bm{p}) \bm{q} - (\bm{q} \cdot \bm{p}) \bm{r} \qed \\
+\end{align*}
+
+\begin{align*}
+\bm{b.)}\; \text{LHS} &= p_i q_j \epsilon_{ijk} \bm{e}^{(k)} \cdot a_m b_n \epsilon_{mnp} \bm{e}^{(p)} \\
+&= p_i q_j a_m b_n \epsilon_{ijk} \epsilon_{mnp} \bm{e}^{(k)} \cdot \bm{e}^{(p)} \\
+&= p_i q_j a_m b_n \epsilon_{ijk} \epsilon_{mnp} \delta_{kp} \\
+&= p_i q_j a_m b_n \epsilon_{kij} \epsilon_{kmn} \\ 
+&= p_i q_j a_m b_n (\delta_{im} \delta_{jn} - \delta_{in} \delta_{jm}) \\
+&= p_i q_j a_i b_j - p_i q_j a_j b_i \\
+&= (\bm{p} \cdot \bm{a})(\bm{q} \cdot \bm{b}) - (\bm{q} \cdot \bm{a}) (\bm{p} \cdot \bm{b}) \qed \\
+\end{align*}
+
+\begin{align*}
+\bm{c.)}\; \text{LHS} &= (a_i b_j \bm{e}^{(i)} \otimes \bm{e}^{(j)}) \cdot (p_m q_n \bm{e}^{(m)} \otimes \bm{e}^{(n)}) \\
+&= a_i b_j p_m q_n \bm{e}^{(i)} \otimes \bm{e}^{(n)} \delta_{jm} \\
+&= a_i \bm{e}^{(i)} \otimes q_n \bm{e}^{(n)} b_jp_j \\
+&= \bm{a} \otimes \bm{q} (\bm{b} \cdot \bm{p}) \qed\\
+\end{align*}
+
+\begin{align*}
+\bm{d.)}\; \text{LHS} &= Q_{ji} a_j^f \bm{e}^{(i)} \cdot Q_{nm} b_n^f \bm{e}^{(m)} \\
+&= a_i^e \bm{e}^{(i)} \cdot b_m^e \bm{e}^{(m)} \\
+&= a_i^e b_m^e \delta_{im} \\
+&= a_i^e b_i^e \\
+&= \bm{a} \cdot \bm{b} \qed
+\end{align*}
 
 \subsection*{1--3. \textbf{Tensors and vectors} [4 pts].}
 The second-order projection tensors $\bn{P}_{\bm{n}}^{||}$ and $\bn{P}_{\bm{n}}^{\perp}$ are useful operators that take a vector $\bm{u}$ and map that vector to its part parallel and perpendicular to a vector $\bm{n}$, respectively. 
@@ -67,6 +122,31 @@ The projection tensors have properties
 Using the projection tensors, show that $\bm{u} = (\bm{u} \cdot \bm{n}) \bm{n} + \bm{n} \times (\bm{u} \times \bm{n} )$.
 
 \bigskip
+\textit{Solution:} \\
+From the provided relationship we see that: \\
+\begin{align*}
+\bm{u} &= \bm{u}_{||} + \bm{u}_{\perp} \\
+&= (\bm{u} \cdot \bm{n}) \bm{n} + \bm{u}_{\perp} \\
+\end{align*}
+Therefore the proof is satisfied if we show that: 
+\begin{equation*}
+\bm{u}_{\perp} = \bm{n} \times (\bm{u} \times \bm{n})
+\end{equation*}
+
+Thus: 
+\begin{align*}
+\bm{n} \times (\bm{u} \times \bm{n}) &= n_p \bm{e}^{p} \times (u_i n_j \epsilon_{ijk} \bm{e}^{(k)}) \\
+&= n_p u_i n_j \epsilon_{pkq} \epsilon_{ijk} \bm{e}^{(q)} \\
+&= n_p u_i n_j \epsilon_{qpk} \epsilon_{ijk} \bm{e}^{(q)} \\
+&= n_p u_i n_j (\delta_{qi} \delta_{pj} - \delta{qj} \delta_{pi}) \bm{e}^{(q)} \\
+&= (n_j u_q n_j - n_i u_i n_q) \bm{e}^{(q)} \\
+&= \bm{u} (\bm{n} \cdot \bm{n}) - (\bm{n} \otimes \bm{n}) \bm{u} \\
+&= \bm{u} - (\bm{n} \otimes \bm{n}) \bm{u} \\
+&= (\bn{I} - \bm{n} \otimes \bm{n}) \bm{u} \\
+&= \bm{u}_{\perp} \qed \\
+\end{align*}
+
+\bigskip
 \subsection*{1--4. \textbf{Vector and tensor calculus} [4 pts].} Show the following vector and tensor identities to be true using index notation:
 
 \begin{itemize}
@@ -74,7 +154,69 @@ Using the projection tensors, show that $\bm{u} = (\bm{u} \cdot \bm{n}) \bm{n} +
     \item $\gradX (\bm{a} \cdot \bm{b}) = (\bm{a} \cdot \gradX) \bm{b} + (\bm{b} \cdot \gradX) \bm{a} + \bm{a} \times (\gradX \times \bm{b}) + \bm{b} \times (\gradX \times \bm{a})$
     \item $ (\bn{A} \bn{B}) \bn{:} \bn{C} = (\bn{A}^\intercal \bn{C})\bn{:} \bn{B} = (\bn{C} \bn{B}^\intercal)\bn{:} \bn{A}$
     \item Let $J = \det \bn{F}$. Show\footnote{It will help to use the expression for the determinant of a tensor in index notation!} that $\frac{\partial J}{\partial \bn{F}} = J \bn{F}^{-\intercal}$. 
-    \end{itemize}
+\end{itemize}
+
+\bigskip
+\textit{Solution.}
+\begin{align*}
+\bm{a.)}\; \text{LHS} &= \epsilon_{ijk}\frac{\partial(\phi a_k)}{\partial x_j} \bm{e}^{(i)} \\
+&= \epsilon_{ijk} \left(\frac{\partial \phi}{\partial x_j}a_k + \phi \frac{\partial a_k}{\partial x_j}\right) \bm{e}^{(i)} \\
+&= \frac{\partial \phi}{\partial x_j} a_k \epsilon_{jki} \bm{e}^{(i)} + \phi \frac{\partial a_k}{\partial x_j} \epsilon_{jki} \bm{e}^{(i)} \\
+&= \nabla_{\bm{X}}\phi \times \bm{a} + \phi \nabla_{\bm{X}} \times \bm{a} \qed \\
+\end{align*}
+
+\begin{align*}
+\bm{b.)}\; \text{LHS} &= \frac{\partial a_j}{\partial x_i} \mathbf{e}^{(j)} \otimes \mathbf{e}^{(i)} \cdot b_k \mathbf{e}^{(k)} + a_j \mathbf{e}^{(j)} \cdot \frac{\partial b_k}{x_i}\mathbf{e}^{(k)} \otimes \mathbf{e}^{(i)} \\
+&= \frac{\partial a_j}{\partial x_i} b_k \mathbf{e}^{(i)} \delta_{jk} + a_j \frac{\partial b_k}{\partial x_i} \delta_{jk} \mathbf{e}^{(i)} \\
+&= \frac{\partial a_j}{\partial x_i} b_j \mathbf{e}^{(i)} + a_j \frac{\partial b_j}{\partial x_i} \mathbf{e}^{(i)} \\
+&= a_{j,i} b_j \mathbf{e}^{(i)} + b_{j,i} a_j \mathbf{e}^{(i)} \\
+\text{RHS} &= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_m \mathbf{e}^{(m)} \times (\epsilon_{ijk} b_{k,j} \mathbf{e}^{(i)}) + b_m \mathbf{e}^{(m)} \times (\epsilon_{ijk} a_{k,j} \mathbf{e}^{(i)}) \\
+&= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_m b_{k,j} \epsilon_{ijk} \epsilon_{mip} \mathbf{e}^{(p)}) + b_m a_{k,j} \epsilon_{ijk} \epsilon_{mip} \mathbf{e}^{(p)} \\
+&= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_m b_{k,j} \epsilon_{ijk} \epsilon_{ipm} \mathbf{e}^{(p)}) + b_m a_{k,j} \epsilon_{ijk} \epsilon_{ipm} \mathbf{e}^{(p)} \\
+&= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_m b_{k,j} (\delta_{jp}\delta_{km} - \delta_{jm}\delta_{kp}) \mathbf{e}^{(p)} + b_m a_{k,j} (\delta_{jp}\delta_{km} - \delta_{jm}\delta_{kp}) \mathbf{e}^{(p)} \\
+&= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_k b_{k,j} \mathbf{e}^{(j)} - a_j b_{k,j} \mathbf{e}^{(k)} + b_k a_{k,j} \mathbf{e}^{(j)} - b_j a_{k,j} \mathbf{e}^{(k)} \\
+&= a_i b_{j,i} \mathbf{e}^{(j)}  + b_i a_{j,i} \mathbf{e}^{(j)} + a_k b_{k,j} \mathbf{e}^{(j)} - a_i b_{j,i} \mathbf{e}^{(j)} + b_k a_{k,j} \mathbf{e}^{(j)} - b_i a_{j,i} \mathbf{e}^{(j)} \\
+&= a_k b_{k,j} \mathbf{e}^{(j)} + b_k a_{k,j} \mathbf{e}^{(j)} \\
+&= a_{k,j} b_k \mathbf{e}^{(j)} + b_{k,j} a_k \mathbf{e}^{(j)} \\
+&= a_{j,i} b_j \mathbf{e}^{(i)} + b_{j,i} a_j \mathbf{e}^{(i)} \\
+\text{LHS} &= \text{RHS} \qed \\
+\end{align*}
+
+\begin{align*}
+\bm{c.)}\; \text{Term 1} &= (A_{ij} B_{jk} \bm{e}^{(i)} \otimes \bm{e}^{(k)}):(C_{mn} \bm{e}^{(m)} \otimes \bm{e}^{(n)})\\ 
+&= A_{ij} B_{jk} C_{mn} \delta_{im} \delta_{kn} \\ 
+&= A_{ij} B_{jk} C_{ik} \\ 
+\text{Term 2} &= (A_{ji} C_{jk} \bm{e}^{(i)} \otimes \bm{e}^{(k)}) : (B_{mn} \bm{e}^{(m)}  \otimes \bm{e}^{(n)}) \\
+&=A_{ji} C_{jk} B_{mn} \delta_{im} \delta_{kn} \\
+&= A_{ji} C_{jk} B_{ik} \\
+&= A_{ij} B_{jk} C_{ik} \\
+\text{Term 3} &= C_{ij} B_{kj} \bm{e}^{(i)} \otimes \bm{e}^{(k)}) : (A_{mn} \bm{e}^{(m)} \otimes \bm{e}^{(n)}) \\
+&= C_{ij} B_{kj} A_{mn} \delta_{im} \delta_{kn} \\
+&= C_{ij} B_{kj} A_{ik} \\
+&= A_{ik} B_{kj} C_{ij} \\
+&= A_{ij} B_{jk} C_{ik} \qed \\
+\end{align*}
+
+\begin{align*}
+\bm{d.)}\; \frac{\partial J}{\partial \bm{F}_{mn}} &= \frac{\partial (\det (\bn{F}))}{\partial \bm{F}_{mn}} \\
+&= \frac{\frac{1}{6} \epsilon_{ijk} \epsilon_{pqr} \bn{F}_{ip} \bn{F}_{jq} \bn{F}_{kr}}{\partial \bn{F}_{mn}} \\
+&= \frac{1}{6} \epsilon_{ijk} \epsilon_{pqr} \left( \frac{\partial \bn{F}_{ip} \bn{F}_{jq}}{\bn{F}_{mn}} \bn{F}_{kr} + \bn{F}_{ip} \bn{F}_{jq} \frac{\bn{F}_{kr}}{\bn{F}_{mn}} \right) \\
+&= \frac{1}{6} \epsilon_{ijk} \epsilon_{pqr} \left( (\delta_{im} \delta_{pn} \bn{F}_{jq} + \bn{F}_{ip} \delta_{jm} \delta_{qn}) \bn{F}_{kr} + \bn{F}_{ip} \bn{F}_{jq} \delta_{km} \delta_{rn} \right) \\
+&= \frac{1}{6} (\epsilon_{mjk} \epsilon_{nqr} \bn{F}_{jq} \bn{F}_{kr} + \epsilon_{imk} \epsilon_{pnr} \bn{F}_{ip} \bn{F}_{kr} + \bn{F}_{ip} \bn{F}_{jq} \epsilon_{ijm} \epsilon_{pqn}) \\
+&= \frac{1}{6} (\epsilon_{jkm} \epsilon_{qrn} \bn{F}_{jq} \bn{F}_{kr} + \epsilon_{kim} \epsilon_{rpn} \bn{F}_{kr} \bn{F}_{ip} + \epsilon_{ijm} \epsilon_{pqn} \bn{F}_{ip} \bn{F}_{jq}) \\
+&= \frac{1}{2} \epsilon_{jkm} \epsilon_{qrn} \bn{F}_{jq} \bn{F}_{kr} \\
+\intertext{Multiply both sides by $\bm{F}_{mi}$ to help achieve form of J on RHS:} \\
+\frac{\partial J}{\partial \bn{F}_{mn}} \bn{F}_{mi} &= \frac{1}{2} \epsilon_{jkm} \epsilon_{qrn} \bn{F}_{jq} \bn{F}_{kr} \bn{F}_{mi} \\
+&= \frac{1}{2} \epsilon_{jkm} \epsilon_{qrn} \bn{F}_{jq} \bn{F}_{kr} \bn{F}_{mn} \delta_{in} \\
+&= 3 J \delta_{in}
+\intertext{Multiply both sides by $\bm{F}^{-1}_{im}$ to isolate $\frac{\partial J}{\partial \bn{F}}$ term:} \\
+(\bn{F}^{-1})_{im} \frac{\partial J}{\partial \bn{F}_{mn}} \bn{F}_{mi} &= 3 J (\bn{F}^{-1})_{im} \delta_{in} \\
+\frac{\partial J}{\partial \bn{F}_{mn}} \delta_{ii} &= 3 J (\bn{F}^{-1})_{nm} \\
+3 \frac{\partial J}{\partial \bn{F}_{mn}} &= 3 J (\bn{F}^{-T})_{mn} \\
+\frac{\partial J}{\partial \bn{F}_{mn}} &= J (\bn{F}^{-T})_{mn} \qed \\
+\end{align*}
+
+
 
 %\newpage
 \bigskip
@@ -103,5 +245,99 @@ Would you expect one set to be more symmetric about zero as $\alpha$ gets large,
 \animategraphics[loop,autoplay,width=4in]{10}{instr-figures/The_Happy_Gelatinous_Cube-}{1}{10}
 \end{figure}
 
-% This is a placeholder for the example problems from the first problem set. 
-% You'll replace this file with the one I supply on canvas. 
+\textit{Solution.}
+
+\textbf{a.)} I begin by defining a mapping function $\mathbf{\chi}$:
+
+\begin{equation*}
+\mathbf{\chi}(\mathbf{X},t) = \mathbf{X} + \mathbf{u}(\mathbf{X},t) = \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+\begin{bmatrix}
+\beta \sin(\omega t) (1-(1-X_2)^2)X_1 \\
+\alpha \sin(\omega t) \frac{X_2}{2} \\
+\beta \sin(\omega t) (1-(1-X_2)^2)X_3
+\end{bmatrix}
+\end{equation*}
+
+This mapping meets all the necessary boundary conditions specified in the problem: (1) $u_2(X_2 = 2) = \sin(\omega t)$, $|u_1(X_2 = 1, X_1 = \pm 1)| = \beta$, and similarly $|u_3(X_2 = 1, X_3 = \pm 1)| = \beta$. It follows that the deformation gradient tensor can be calculated as: 
+
+\begin{align*}
+\bn{F}(\mathbf{X},t) &= \nabla_{\mathbf{X}}\mathbf{\chi}(\mathbf{X},t) \\
+&= \begin{bmatrix}
+    1+\beta \sin(\omega t)(1-(1-X_2)^2 & 2\beta\sin(\omega t)X_1(1-X_2) & 0 \\
+    0 & 1 + \frac{\alpha}{2} \sin(\omega t) & 0 \\
+    0 & 2\beta\sin(\omega t)X_3(1-X_2) & 1+\beta\sin(\omega t)(1-(1-X_2)^2)
+\end{bmatrix}
+\end{align*}
+
+\textbf{a.)}
+
+\begin{equation*}
+    \bn{F}(X_2 = 1) = \begin{bmatrix}
+        1+\beta\sin(\omega t) & 0 & 0 \\ 
+        0 & 1 + \frac{\alpha}{2}\sin(\omega t) & 0 \\
+        0 & 0 & 1 + \beta \sin(\omega t)
+    \end{bmatrix}
+\end{equation*}
+
+\textbf{b.)}
+\begin{align*}
+    \bn{C}(X_2 = 1) &= \bn{F}^T(X_2 = 1) \bn{F}(X_2 = 1) \\
+    &= \begin{bmatrix}
+        (1+\beta\sin(\omega t))^2 & 0 & 0 \\ 
+        0 & (1 + \frac{\alpha}{2}\sin(\omega t))^2 & 0 \\
+        0 & 0 & (1 + \beta \sin(\omega t))^2
+    \end{bmatrix}
+\end{align*}
+I will calculate the stretch in the plane made by $\mathbf{e}^{1}$ and $\mathbf{e}^{3}$. A fiber direction $\mathbf{\hat{n}}$ located in this plane with an angle $\theta$ from the $\mathbf{e}^(1)$ axis is: 
+\begin{equation*}
+\mathbf{\hat{n}} = \begin{bmatrix} \cos(\theta) & 0 & \sin(\theta) \end{bmatrix}
+\end{equation*}
+\begin{align*}
+\lambda(\mathbf{\hat{n}}) &= \sqrt{\mathbf{\hat{n}} \cdot \mathbf{C} \mathbf{\hat{n}}} \\
+&= \sqrt{ \begin{bmatrix} \cos(\theta) \\ 0 \\ \sin(\theta) \end{bmatrix} \cdot \begin{bmatrix}
+    (1+\beta\sin(\omega t))^2\cos(\theta) \\ 0 \\ (1 + \beta\sin(\omega t))^2\sin(\theta)
+\end{bmatrix}} \\
+&= \sqrt{(1+\beta\sin(\omega t))^2(\cos^2(\theta) + \sin^2(\theta))} \\ 
+&= \sqrt{(1+\beta\sin(\omega t))^2} \\
+&= 1+\beta\sin(\omega t))
+\end{align*}
+Observe that the result will always be positive because it is not a stretch so no absolute value sign is needed. Also note the stretch in the plane does not depend on $\theta$ which aligns with intuition that the central plane of the cube should be axisymmetric about $\mathbf{e}^{(2)}$. 
+
+\textbf{c.)}
+Evaluating for Lagrange-Green and logarithmic strains at the centroid of the cube (i.e., $\mathbf{X_c} = [0,1,0]$):
+\begin{align*}
+\mathbf{E}(\mathbf{X_c}) &= \frac{1}{2}(\mathbf{C}-\mathbf{I)} \\
+&= \frac{1}{2} \left(\begin{bmatrix}
+    1+2\beta\sin(\omega t)+\beta^2\sin^2(\omega t) & 0 & 0 \\ 0 & 1+ \alpha\sin(\omega t) + \frac{\alpha^2}{4}\sin^2(\omega t) & 0 \\ 0 & 0 & 1 + 2 \beta \sin(\omega t)+\beta^2\sin^2(\omega t)
+\end{bmatrix} - \mathbf{I}\right) \\ 
+&= \begin{bmatrix}
+    \beta\sin(\omega t)(1+\beta\sin(\omega t)) & 0 & 0 \\ 0 & \frac{\alpha}{2}\sin(\omega t)(1 + \frac{\alpha}{4}\sin(\omega t)) & 0 \\ 0 & 0 & \beta\sin(\omega t)(1+\beta\sin(\omega t))
+\end{bmatrix}
+\end{align*}
+\begin{align*}
+\mathbf{E_H} &= \ln(\mathbf{U}) \\
+&= \ln(\sqrt{\mathbf{C}}) \\
+&= \begin{bmatrix}
+    \ln(1+\beta\sin(\omega t)) & 0 & 0 \\ 0 & \ln(1+\frac{\alpha}{2}\sin(\omega t)) & 0 \\ 0 & 0 & 1 + \beta\sin(\omega t)
+\end{bmatrix}
+\end{align*}
+
+I don't need to calculate the eigen values because with the way I defined the mapping function $\mathbf{\chi}$ my deformation gradient tensor and the strains that came from it were already in it's eigen basis. \\
+
+At $t = \frac{n\pi}{\omega}$ the cube is undeformed and the eigen values all equal 1. Then the cube is under-compression in the $\mathbf{e}^{(2)}$ direction, then the $\mathbf{E}_{1,1}$ and $\mathbf{E}_{3,3}$ are the largest eigen values because they will be in tension. This assumes that the Happy Gelatinuous Cube is of course has properties similar to a gelatin-like material and is not auxetic. The same goes for $\mathbf{E}_H$. When the cube is under tension in the direction $\mathbf{e}^{(2)}$, the $\mathbf{E}_{2,2}$ component is the largest eigen value and the other diagonal components are the smallest. \\
+
+As $\alpha$ gets large so too well the magnitudes of the tensile and compressive strains experienced by the specimen. We should except that the logarithmic strains will remain more symmetric. It is worth noting that although in the limit as $\alpha$ approaches $0$ both strain metrics are equivalent, as $\alpha$ becomes large this is not the case. In fact, for a sufficiently large tensile strain, $\mathbf{E}$ tends to $\infty$ whereas at maximum compression the term would approach a Gree-Lagrange strain of $-0.5$. For logarithmic strain, $\ln(\lambda) = -\ln(\lambda^{-1})$ so the magnitude stays much more symmetric for the various terms for the HGC. If let's compare the strains for a single term if stretch is 10 vs $\frac{1}{10}$. Green-Lagrange strains would be 49.5 and -0.4950, respectively whereas logarithmic strain would be 2.30 and -2.30. 
+
+\textbf{d.)}
+
+\begin{align*}
+\mathbf{A}(\mathbf{X},t) &= \frac{\partial^2\mathbf{\chi}}{\partial t^2} \\
+&= \frac{\partial}{\partial t} \begin{bmatrix}
+    \beta\omega\cos(\omega t)(1-(1-X_2)^2)X_1 \\ \alpha\omega\cos(\omega t)\frac{X_2}{2} \\
+    \beta\omega\cos(\omega t)(1-(1-X_2)^2)X_3
+\end{bmatrix} \\
+&= \begin{bmatrix}
+    -\beta\omega^2\sin(\omega t)(1-(1-X_2)^2)X_1 \\ -\alpha\omega^2\sin(\omega t)\frac{X_2}{2} \\
+    -\beta\omega^2\sin(\omega t)(1-(1-X_2)^2)X_3
+\end{bmatrix}
+\end{align*}
