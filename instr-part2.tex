@@ -27,7 +27,26 @@ The sections should be the following:
 
 \textit{A strong literature review outline will succinctly illustrate the essential context of the problem, the current best knowledge in the area, and the critical gap in knowledge restricting further advances or implementation, and should cite approximately 10-15 references with a \LaTeX ~bibliography.}
 
+\bigskip
 
-%This is just a placeholder for now
+For context, since last time I have (at Jon's request) opted to focus more on inverse solving for spatial distributions in viscous properties in tandem with the nonhomogeneous moduli from full-field data. This would clearly be challenging, however, it would be incredibly novel. In terms of my vision, if this was actually completed I would probably opt to conduct this study on a soft elastomeric material, but early studies would focus on small strains and eventually building on to finite strain viscoelastic characterization. 
 
+\textbf{Introductory Context}
+\begin{itemize}
+    \item Functionally gradient soft materials (FGSM) abound in nature from fish-scales \cite{Yang2019} to gradient orientations of cellulose microfibrils in tree branches \cite{liu2017functional} oftentimes yielding structures that offer the durability and strength of more rigid materials with the impact absorption and high flexibility from soft materials. 
+    \item Since the advent of additive manufacturing (AM) in the early 1980's \cite{Kodama1981} and subsequent work printing metals \cite{beaman1990selective}, the main use case has been manufacturing low-volume and/or complex form factor components \cite{Wong2012}. Primarily from the 2010's onward, several polymer AM techniques \cite{Pragya2023} were modified to manufacture detailed functionally gradient plastic and elastomer device providing an additional edge over traditional manufacturing techniques. 
+\end{itemize}
 
+\textbf{The State of the Field}
+\begin{itemize}
+    \item Primary methods for inverse solving material property distributions from full-field deformation measurements include physics-based methods including VFM \cite{grediac1989principe} and FEMU \cite{mottershead1993model} as well as data-driven approaches such as physics-informed neural networks \cite{GHAFFARIMOTLAGH2025117650}. Recently these techniques have been expanded to characterizing nonhomogenous materials at linear elastic \cite{Mei2021} and hyperelastic \cite{shojaee5294317automated} regimes. 
+    \item In the world of grayscale 3D printing \cite{Kuang2019,Peterson2016} and even more broadly gradient multi-material forms of ink jetting \cite{Müller2014} and direct ink writing \cite{Young2024} have emphasized tunability in solely Young's modulus. Broadly speaking, most prints are validated quite crudely by quantifying their time-dependent macroscopic response to stimuli in 4D prints \cite{ANDREU2021102024} and simple tests of relative stiffness in FGSM prints such as deforming parts of the device by hand \cite{Yue2023}. 
+\end{itemize}
+
+\textbf{The Big Gap}
+\begin{itemize}
+    \item Despite recent advances in inverse methods for nonhomogenous specimens, the characterization of spatially-varying viscoelastic response largely remains absent in the literature. Several factors likely contribute to the lack of work in this area including the relatively recent dawn of methods characterizing FGSMs at quasi-static rate and the lack of full-field measurements studies conducted on novel grayscale prints stemming from the lack of sufficient collaboration between 3D printing and solid mechanics communities. 
+\end{itemize}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
