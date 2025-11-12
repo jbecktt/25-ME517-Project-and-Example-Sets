@@ -18,10 +18,51 @@ We determine the creep function to be
 \end{equation}
 (a) Attach a plot of $J_c(t)$, labeling significant values.
 
+\bigskip
+
+\textit{Solution.}\\
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{jbecktt-figures/3-1-plot-jbecktt.pdf}
+\end{center}
+
+Notable points include the instantaneous creep compliance creep compliance $J_0$, the final converged creep compliance following all relaxation denoted as $\sum J_i$, and the two times of the two time constants at 4 and 8 seconds. 
+
+\bigskip
+
 (b) Determine the corresponding stress relaxation function $G_r(t)$. What are the characteristic stress relaxation times now, and how do they compare to the creep relaxation times? 
 
 \bigskip
-\bigskip
+
+\textit{Solution.}\\
+
+\begin{align*}
+    s \overline{G_r}(s) \overline{J_c}(s) &= \frac{1}{s} \\
+    \overline{G_r}(s) &= \frac{1}{s^2\overline{J_c}(s)}
+\end{align*}
+
+With the creep compliance function, $J_c(t)$, provided in our problem we can calculate the Laplace transform. 
+
+\begin{align*}
+    \overline{G_r}(s) = \frac{1}{1000} \left( \frac{10}{s} - \frac{5}{s+\frac{1}{4}} - \frac{3}{s+\frac{1}{8}}\right)
+\end{align*}
+
+Substituting yields
+
+\begin{equation*}
+    \overline{G_r}(s) = \frac{1000}{10s-\frac{5s^2}{s+1/4}-\frac{3s^2}{s+\frac{1}{8}}}
+\end{equation*}
+
+Using the inverse Laplace solver for Wolfram Alpha to finish the problem 
+
+\begin{equation*}
+    G_r(t) = 100 +e^{-t/0.971}+9.56e^{-t/6.62}
+\end{equation*}
+
+The characteristic stress relaxation times now are 6.6 and 0.97. These values are smaller than both of the previous values.
+
+
+
 \bigskip
 \subsection*{3--2. \textbf{Alternate standard linear solid model} [4 pts].}
 
@@ -30,9 +71,85 @@ In this question, we'll investigate a variant arrangement for the SLS, where a s
 
 (a) Determine the differential constitutive law for the variant SLS. 
 
+\bigskip 
+\textit{Solution.}\\
+
+Let the ground state spring have modulus $E_1$, the dashpot have viscosity $\eta$, and the Kelvin-Voigt (KV) spring have modulus $E_2$. Recognizing using an FBD approach that both the ground-state spring and the KV section must share the same forcing: 
+
+\begin{align*}
+    \sigma(t) &= \sigma_s(t) = \sigma_{KV}(t) \\
+    \varepsilon(t) &= \varepsilon_s(t) + \varepsilon_{KV}(t) \\     
+\end{align*}
+
+We proceed by using a known constitutive relation for the KV model:
+
+\begin{align*}
+    \sigma_{KV}(t) &= \eta\dot{\varepsilon}_{KV}(t) + E_2 \varepsilon_{KV}(t) \\
+    \sigma(t) &= \eta\dot{\varepsilon}_{KV}(t) + E_2 [\varepsilon(t) - \varepsilon_s(t)] \\
+    \sigma(t) &= \eta\dot{\varepsilon}_{KV}(t) + E_2 [\varepsilon(t) - \frac{\sigma_s(t)}{E_1}] \\
+    \sigma(t) &= \eta\dot{\varepsilon}_{KV}(t) + E_2 [\varepsilon(t) - \frac{\sigma(t)}{E_1}]
+\end{align*}
+
+Let $\tau_i = \eta/E_i$. Simplifying further:
+
+\begin{align*}
+    E_1\sigma &= E_1\eta \dot{\varepsilon} - \eta\dot{\sigma}+E_1E_2\varepsilon-E_2\sigma \\
+    \eta\dot{\sigma} + (E_1+E_2)\sigma &= E_1\eta\dot{\varepsilon}+E_1E_2\varepsilon \\
+    \eta\dot{\sigma}+\left(\frac{\eta}{\tau_1} + \frac{\eta}{\tau_2}\right)\sigma &= \frac{\eta^2}{\tau_1}\dot{\varepsilon} + \frac{\eta^2}{\tau_1\tau_2}\varepsilon \\ 
+    \dot{\sigma}+\left(\frac{1}{\tau_1} + \frac{1}{\tau_2}\right)\sigma &= \frac{\eta}{\tau_1}\dot{\varepsilon} + \frac{\eta}{\tau_1\tau_2}\varepsilon \\
+    \tau_1\tau_2\dot{\sigma} + (\tau_1+\tau_2)\sigma &= \eta(\tau_2\dot{\varepsilon} + \varepsilon) \\
+    \dot{\sigma} + \frac{(\tau_1+\tau_2)}{\tau_1\tau_2}\sigma &= \frac{\eta}{\tau_1}\left(\dot{\varepsilon} + \frac{\varepsilon}{\tau_2}\right)
+    % \dot{\sigma}+\frac{\sigma}{\tau_1+\tau_2} &= E_1\dot{\varepsilon} + \frac{\varepsilon}{\tau_2}
+\end{align*}
+
 (b) Then, the creep compliance function $J_c(t)$ and hence, the relaxation function $G_r(t)$.
 
+I am going to assume that in the initial state at time of 0s that $\varepsilon$ and $\sigma$ are equal to 0. Transforming into Laplace space: 
+
+\begin{align*}
+    \tau_1\tau_2(s\bar{\sigma}(s)-\sigma(0))+(\tau_1+\tau_2)\bar{\sigma}(s) &= \eta(\tau_2(s\bar{\varepsilon}(s)-\varepsilon(0))+\bar{\varepsilon}(s)) \\
+    \tau_1\tau_2s\bar{\sigma}(s)+(\tau_1+\tau_2)\bar{\sigma}(s) &= \eta(\tau_2s\bar{\varepsilon}(s)+\bar{\varepsilon}(s)) \\
+    (\tau_1\tau_2s+\tau_1+\tau_2)\bar{\sigma}(s) &= \eta(\tau_2s+1)\bar{\varepsilon}(s) \\
+    \bar{\sigma}(s) &= \frac{\eta(\tau_2s+1)}{\tau_1\tau_2s+\tau_1+\tau_2}\bar{\varepsilon}(s) \\
+    % (\tau_1\tau_2s+\tau_1+\tau_2)\bar{\sigma}(s) &= \eta(\tau_2s+1)\bar{\varepsilon}(s) \\
+    \bar{\sigma}(s) &= s\frac{\eta(\tau_2+\frac{1}{s})}{\tau_1\tau_2s+\tau_1+\tau_2}\bar{\varepsilon}(s) \\
+\end{align*}
+
+We know from theory that $\bar{\sigma}_s(s) =s\bar{G}_r(s)\bar{\varepsilon}_s(s)$ so we can identify $\bar{G}_r(s)$ and solve for our relaxation function.
+
+\begin{align*}
+    \bar{G}_r(s) &= \frac{\eta(\tau_2+\frac{1}{s})}{\tau_1\tau_2s+\tau_1+\tau_2} \\
+    &= \frac{\eta}{\tau_1\tau_2}\frac{\tau_2+\frac{1}{s}}{s+(\frac{1}{\tau_1}+\frac{1}{\tau_2})} \\
+    \bar{G}_r(t) &= \frac{\eta}{\tau_1\tau_2}\left( \tau_2 e^{-\frac{(\tau_1+\tau_2)t}{\tau_1\tau_2}} + \frac{(\tau_1+\tau_2)}{\tau_1\tau_2}\left(1-e^{-\frac{(\tau_1+\tau_2)}{\tau_1\tau_2}t}\right)\right) \\
+    &= \frac{\eta}{\tau_1+\tau_2} + \frac{\eta\tau_2}{\tau_1(\tau_1+\tau_2)}e^{-\frac{(\tau_1+\tau_2)}{\tau_1\tau_2}t} \\
+    &= \frac{E_1E_2}{E_1+E_2} + \frac{E_1^2}{E_1 + E_2}e^{-\frac{E_1 + E_2}{\eta}t}
+\end{align*}
+
+To find the creep compliance we can once again use Laplace transformations:
+
+\begin{align*}
+    \bar{J}_c(s) &= \frac{1}{s^2\bar{G}_r(s)} \\
+    &= \frac{\tau_1\tau_2s+\tau_1+\tau_2}{s^2\eta(\tau_2+1/s)} \\
+    &= \frac{1}{\eta}\frac{\tau_1\tau_2s+\tau_1+\tau_2}{s(s\tau_2+1)} \\
+    &= \frac{1}{\eta}\left( \frac{\tau_1}{s+1/\tau_2} + \frac{\tau_1/\tau_2 + 1}{s(s+1/\tau_2)}\right) \\
+\end{align*}
+
+Inverting out of Laplace: 
+
+\begin{align*}
+    J_c(t)  &= \frac{1}{\eta}\left(\tau_1e^{-t/\tau_2} + \frac{\tau_1/\tau_2 + 1}{1/\tau_2}(1-e^{-t/\tau_2})\right) \\
+    &= \frac{\tau_1+\tau_2}{\eta} - \frac{\tau_2}{\eta}e^{-t/\tau_2} \\
+    &= \frac{\tau_1}{\eta} + \frac{\tau_2}{\eta}(1-e^{-t/\tau_2}) \\
+    &= \frac{1}{E_1} + \frac{1}{E_2}(1-e^{-E_2t/\eta})
+\end{align*}
+
+
 (c) How do the coefficients in the two variants of the standard solid model relate to each other?
+
+\bigskip    
+\textit{Solution.} \\
+
+The expressions are certainly not identical. The new $\bar{G}_r(t)$ has a constant term comprised of both moduli instead of just $E_1$ (note in lecture notes that $E$,$E_1$ -> $E_1$,$E_2$ in my notation). There is also a single exponential term, but now there is dependence on both springs and the viscosity instead of just $E_2$. For creep compliance, The constant term remains unchanged between the two SLS forms, however, the exponential constant depends only on $E_2$ rather than both moduli. Also, the exponential power is only dependent on $\eta$  and $\E_2$ and has no additional $E_1$ dependence.
 
 \bigskip
 \bigskip
@@ -40,9 +157,47 @@ In this question, we'll investigate a variant arrangement for the SLS, where a s
 \subsection*{3--3. \textbf{Frequency response of a 5-term analog model} [4 pts].}
 You have a five-parameter fit $G_r(t) = C_r (200 e^{-2t} + 100 e^{-t} + 10)$ that describes the relaxation behavior of a real material. 
 
-(a) Draw the equivalent mechanical analog model for this fit.
+(a) Draw the equivalent mechanical analog model for this fit.\\
+
+\bigskip
+\textit{Solution}.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{jbecktt-figures/IMG_5415.jpg}
+\end{center}
+
+The mechanical analog for the relaxation modulus provided is a generalized Maxwell model with a ground-state spring and two additional Maxwell branches. The corresponding values for $E_0$, $E_1$, and $E_2$ are 10, 200, and 100, respectively. The corresponding time-constants, $\tau_1$ and $\tau_2$, are 1/2 and 1. Also, I have no clue what the $C_r$ term is in there. If it's just a constant then scale all of the moduli by that same $C_r$ value. 
 
 (b) Determine the functional forms for the storage and loss moduli, and create a semi-log plot of the loss tangent $(\tan\delta)$ over a domain of relevant frequency orders $(\log \omega)$. 
+
+\bigskip    
+\textit{Solution.}\\
+
+\begin{align*}
+    E_\infty &= \lim_{t \to \infty} G_r(t) \\
+    &= 10 \\
+    \tilde{E}(t) &= G_r(t)- E_\infty \\
+    &= 200e^{-2t}+100e^{-t} \\
+\end{align*}
+
+Now we can solve for the loss and storage moduli
+
+\begin{align*}
+    E'(\omega) &= E_\infty + \omega \int_0^\infty\tilde{E}(t')\sin{(\omega t')}dt' \\
+    &= 10 + \omega\int_0^\infty(200e^{-2t'}+100e^{-t'})\sin{(\omega t')}dt' \\
+    &= 10 + \omega \left( \frac{200\omega}{2^2+\omega^2} + \frac{100\omega}{1^2+\omega^2}  \right) \\
+    &= 10 + \omega^2 \left( \frac{200}{4+\omega^2} + \frac{100}{1+\omega^2}  \right) \\
+    E''(\omega) &= \omega \int_0^\infty \tilde{E}(t')\cos{(\omega t)}dt' \\
+    &= \omega \int_0^\infty (200e^{-2t'}+100e^{-t'})\cos{(\omega t)}dt' \\
+    &= \omega \left(  \frac{200\cdot2}{2^2+\omega^2} + \frac{100\cdot1}{1^2+\omega^2} \right) \\
+    &= \omega \left(  \frac{400}{4+\omega^2} + \frac{100}{1+\omega^2} \right) \\
+\end{align*}
+
+$\tan{(\delta)}$ is the ratio of $E''/E'$. It is plotted below based as a function of $\omega$. 
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{jbecktt-figures/tandelta_jbecktt.pdf}
+\end{center}
 
 \newpage
 \subsection*{3--4. \textbf{Fractional response} [4 pts].}
@@ -62,6 +217,81 @@ Picking e.g., logit($\alpha$)$=0$ corresponds to $\alpha =0.5$, $\textrm{logit}(
 I suggest sampling integers on a range of logit($\alpha$) $= -4 \textrm{~to~} 4$ to cover the full range from elastic to viscous response for the springpot.
 
 \bigskip
+\textit{Solution.}\\
+
+(a) For the case of a step strain
+
+\begin{align*}
+    \varepsilon(t) &= \varepsilon_0 \mathcal{H}(t) \\
+    \bar{\varepsilon}(s) &= \frac{\varepsilon_0}{s}\\
+    \bar{\sigma}(s) &= \bar{G}_r(s)\cdot s\bar{\varepsilon}(s) \\
+    &= \bar{G}_r(s)\cdot s \frac{\varepsilon_0}{s} \\
+    &= \bar{G}_r(s)\cdot\varepsilon_0 \\
+    \sigma(t) &= \varepsilon_0 G_r(t)
+\end{align*}
+
+\begin{center}          \includegraphics[width=0.5\textwidth]{jbecktt-figures/3-4-stepstrain.pdf}
+\end{center}
+
+(b) For the case of a step stress 
+
+\begin{align*}
+    \sigma(t) &= \sigma_0(\mathcal{H}(t) - \mathcal{H}(t-5))\\
+    \bar{\sigma}(s) &= \sigma_0 \left( \frac{1}{s} - \frac{1}{s} e^{-5s}\right) \\
+    \bar{\varepsilon}(s) &= \bar{J}_c(s)\cdot s \bar{\sigma}(s) \\
+    &= \bar{J}_c(s)\cdot s \sigma_0 \left( \frac{1}{s} - \frac{1}{s} e^{-5s}\right) \\
+    &= \sigma_0(1-e^{-5s})\bar{J}_c(s) \\
+    \bar{J}_c(s) &= \frac{1}{s^2\bar{G}_r(s)} \\
+    &= \frac{1}{10s+2(0.2^\alpha)\Gamma(1-\alpha)s^{1+\alpha}} \\
+    \bar{\varepsilon}(s) &= \frac{\sigma_0\left( 1 - e^{-5s}\right)}{10s+2(0.2^\alpha)\Gamma(1-\alpha)s^{1+\alpha}}
+\end{align*}
+
+Let b = $2(0.2^\alpha)\Gamma(1-\alpha)$ as we simplify. As is common convention, $\Gamma$ is the standard gamma function.
+
+\begin{align*}
+    \bar{\varepsilon}_c(s) &= \frac{\sigma_0}{b}\frac{1-e^{-5s}}{s^2(\frac{10}{b}-+s^\alpha)}\\
+    \mathcal{L}\{t^{\beta-1} E_{\alpha,\beta}(-at^\alpha)\} &= \frac{s^{\alpha-\beta}}{s^\alpha+a} \\
+    \mathcal{L}\{t^{(\alpha+2)-1} E_{\alpha,(\alpha+2)}(-at^\alpha)\} &= \frac{s^{\alpha-(\alpha+2)}}{s^\alpha+a} \\
+    \mathcal{L}\{t^{\alpha+1} E_{\alpha,\alpha+2}(-at^\alpha)\} &= \frac{s^{-2}}{s^\alpha+a} \\
+    &= \frac{1}{s^2(s^\alpha+a)} \\
+    \varepsilon(t) &= \frac{\sigma_0}{b}\left(t^{\alpha+1}E_{\alpha,\alpha+2}(-\frac{10}{b}t^\alpha) - (t-5)^{\alpha+1}E_{\alpha,\alpha+2}(-\frac{10}{b}(t-5)^\alpha)\mathcal{H}(t-5)\right)
+\end{align*}
+
+Here $E_{m,n}$ is the two-term Mittag-Leffler function. I used a MATLAB file-exchange function to approximate the analytic function. 
+
+\begin{center}          \includegraphics[width=0.5\textwidth]{jbecktt-figures/3-4-stressstepdiscrete.pdf}
+\end{center}
+
+(c) For a final function I simply studied the effect of having stair-stepping in the stress-stepping and how it looks in a more general loading case. Half of the load is released at $t = 0.5$ now and the remaining stress load is still released at $t = 5$.
+
+\begin{align*}
+    \sigma(t) &= \sigma_0(\mathcal{H}(t) - 0.5\mathcal{H}(t-2.5) - 0.5\mathcal{H}(t-5))\\
+    \bar{\sigma}(s) &= \sigma_0 \left( \frac{1}{s} - \frac{0.5}{s} e^{-2.5s} - \frac{0.5}{s} e^{-5s}\right) \\
+    \bar{\varepsilon}(s) &= \bar{J}_c(s)\cdot s \bar{\sigma}(s) \\
+    &= \bar{J}_c(s)\cdot s \sigma_0 \left( \frac{1}{s} - \frac{0.5}{s} e^{-2.5s} - \frac{0.5}{s} e^{-5s}\right) \\
+    &= \sigma_0(1-0.5e^{-2.5s}-0.5e^{-5s})\bar{J}_c(s) \\
+    \bar{J}_c(s) &= \frac{1}{s^2\bar{G}_r(s)} \\
+    &= \frac{1}{10s+2(0.2^\alpha)\Gamma(1-\alpha)s^{1+\alpha}} \\
+    \bar{\varepsilon}(s) &= \frac{\sigma_0\left( 1 - 0.5 e^{-2.55s}- 0.5 e^{-5s}\right)}{10s+2(0.2^\alpha)\Gamma(1-\alpha)s^{1+\alpha}}
+\end{align*}
+
+Using a very similar inverse Laplace strategy as I did prior I solve for strain as 
+
+\begin{align*}
+\varepsilon(t) &= \frac{\sigma_0}{b} \Bigl(
+    t^{\alpha+1} E_{\alpha,\alpha+2}\Bigl(-\frac{10}{b} t^\alpha \Bigr) \\
+    &\quad - 0.5 (t-2.5)^{\alpha+1} E_{\alpha,\alpha+2}\Bigl(-\frac{10}{b} (t-2.5)^\alpha \Bigr) \mathcal{H}(t-2.5) \\
+    &\quad - 0.5 (t-5)^{\alpha+1} E_{\alpha,\alpha+2}\Bigl(-\frac{10}{b} (t-5)^\alpha \Bigr) \mathcal{H}(t-5)
+\Bigr)
+\end{align*}
+
+\begin{center}          \includegraphics[width=0.5\textwidth]{jbecktt-figures/3-4-stresssteps-partc.pdf}
+\end{center}
+
+In the strain response, we can we two distinct inflections in the strain plot now that stress is released in two separate events rather than all at once. 
+
+
+\bigskip
 \bigskip
 \subsection*{3--5. \textbf{Rheology without a rheometer} [8 pts].}
 
@@ -77,10 +307,73 @@ where $c = 1000$ m/s represents the pressure wave speed in the material and the 
 
 (a) How much energy per volume is dissipated by the material for each size of ball? 
 
+\bigskip
+\textit{Solution.}
+
+Immediately prior to being dropped from it's max height the ball has only potential energy. The same can be said after it has reached it's maximum rebounding height of $h(R)$. This means the energy lost per unit volume between these two points in time is simply the change in potential energy: 
+
+\begin{align*}
+    \Delta \hat{E}(R) = \rho g(h(R)-h_0) \\
+    \Delta \hat{E}(R) = \rho g(h(R)-0.01) \\
+\end{align*}
+
 (b) Using the Lissajous plot of $\sigma/|E^*|$ vs. $\varepsilon$, show that the approximate peak elastic energy stored in the ball during a half-cycle is $\frac{1}{2} B^2 \cos \delta$, where $B = \varepsilon_{\textrm{max}}$. 
+
+For the Lissajous plot, we know the general forms for stress and strain. We first seek the time where strain is maximum:
+
+\begin{align*}
+    \varepsilon(t) &= \varepsilon_{max}\sin(\omega t) \\
+    &= B\sin(\omega t) \\
+    \varepsilon(\frac{\pi}{2\omega}) &= B \\
+    \sigma(t) &= \sigma_{max}\sin(\omega t + \delta) \\
+    &= |E^*|\varepsilon_{max}\sin(\omega t + \delta) \\
+    &= |E^*|B\sin(\omega t + \delta) \\
+    \sigma(\frac{\pi}{2\omega}) &= |E^*|B\sin(\omega (\frac{\pi}{2\omega}) + \delta) \\
+    &= |E^*|B\sin(\frac{\pi}{2} + \delta) \\
+    &= |E^*|B\cos(\delta) \\
+    U(t) &= \frac{1}{2}\varepsilon(t)\sigma(t) \\
+    U_{peak} &= U(\frac{\pi}{2\omega}) \\
+    &= \frac{1}{2}(B)(|E^*|B\cos(\delta)) \\
+    U_{peak}/|E^*| &= \frac{1}{2}B^2\cos(\delta)
+\end{align*}
 
 (c) Determine an approximate expression for the energy dissipated by the ball during a drop event in terms of $A = \varepsilon_{\textrm{max}} \sin \delta$ and $B$. 
 
+\bigskip
+\textit{Solution.}\\
+
+I will begin by finding the the approximate energy that it takes to load one of the balls. 
+
+\begin{align*}
+    W &= \int_0^{\varepsilon_{max}} \sigma(t)\frac{d\varepsilon}{dt}dt \\
+    &= \int_0^{\frac{\pi}{2\omega}}|E^*|B\sin(\omega t+\delta)(B\omega\cos(\omega t))dt \\
+    &= |E^*|B^2\omega \int_0^{\frac{pi}{2\omega}}\sin(\omega t+\delta)\cos(\omega t)dt \\
+    &= |E^*|B^2\omega \int_0^{\frac{pi}{2\omega}}(\sin(\omega t)\cos(\delta) +\sin(\delta)\cos(\omega t))\cos(\omega t)dt \\
+    &= |E^*|B^2\omega \int_0^{\frac{pi}{2\omega}} \cos(\delta)\sin(\omega t)\cos(\omega t) + \sin(\delta) \cos^2(\omega t)dt \\
+    &= |E^*|B^2\omega \left( \cos(\delta)\frac{\sin^2(\omega t)}{2\omega} + \sin(\delta) \left( \frac{t}{2} + \frac{\sin(2\omega t)}{4\omega} \right) \right) \Bigg|_0^{\frac{\pi}{2\omega}} \\
+    & = |E^*|B^2\omega \left(\cos(\delta)\frac{1-0}{2\omega} + \sin(\delta)\left( \frac{\pi}{4\omega} + 0 - 0 - 0) \right)\right) \\
+    & = |E^*|B^2\omega \left(\frac{\cos(\delta)}{2\omega} + \frac{\sin(\delta)\pi}{4\omega}\right) \\
+\end{align*}
+
+The dissipated energy is all in the term with the $\sin(\delta)$ and recognize that to obtain our full energy dissipated from a ball drop we must double our value to account for load and unload. 
+
+\begin{align*}
+    W_{loss} &= 2|E^*|B^2\omega \frac{\sin(\delta)\pi}{4\omega} \\ 
+    &= |E^*|B^2 \frac{\sin(\delta)\pi}{2} \\ 
+    &= \frac{|E^*|AB\pi}{2}
+\end{align*}
+
 (d) Hence, determine $\tan\delta$ as a function of the rebound height, $h(R)$. 
 
+\begin{align*}
+    \tan\delta(R) &= \frac{W_{loss}}{W_{store}}\\
+    &= \frac{\frac{\pi}{2}|E^*|AB}{\rho g h(R)} \\
+    &= \frac{\rho g (0.01-h(R))}{\rho g h(R)} \\
+    &= \frac{0.01-h(R)}{h(R)} \\
+\end{align*}
+
+Note that there are two separate expressions here. They are all equal, but the one on the bottom and the second from the top (i.e., has AB term) are two different ways to look at the relation. The bottom is probably the one you are looking for because it's crisp. 
+
 (e) For what frequencies could you say this material is calibrated?
+
+Using the contact time equation from above, we find that the contact times from the 1m and 0.01m balls respectively are 0.025s and 0.00025s, respectively. Recognize this as half the duration of a full cycle on the Lissajous plot. This means that the large ball corresponds to a range of 20Hz and the small ball has a frequency of 2000 Hz. Between 20 and 2000 Hz is the effective range that samples could be calibrated with this technique with balls of these diameters. 
